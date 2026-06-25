@@ -239,6 +239,85 @@ function nutritionTargets(weight, rate) {
     surplus
   };
 }
+// ---- Weekdieet aanbevelingen ----
+const MEAL_PLAN = [
+  { day:"Maandag", tag:"Run + Kickboksen + Grappling", kcal:3720,
+    meals:[
+      { t:"07:00", name:"Pre-run boost", desc:"2 rijstwafels · 1 el honing · banaan", kcal:230, p:4 },
+      { t:"08:30", name:"Ochtend Power Bowl", desc:"100g havermout · 30g whey · banaan · 1 el pindakaas · blauwe bessen · havermoutmelk", kcal:700, p:38 },
+      { t:"12:30", name:"Kip-Rijst Bowl", desc:"200g kipfilet gegrild · 250g gekookte rijst · ½ avocado · broccoli · 1 el olijfolie · sojasaus", kcal:870, p:52 },
+      { t:"16:00", name:"Tussendoor", desc:"400g magere kwark · 30g granola · 15g honing", kcal:390, p:28 },
+      { t:"18:00", name:"Pre-sport shake", desc:"40g whey · banaan · 250ml water", kcal:270, p:32 },
+      { t:"21:30", name:"Herstel Diner Bowl", desc:"200g zalmfilet · 300g zoete aardappel · spinazie · 1 el olijfolie", kcal:820, p:44 },
+      { t:"22:30", name:"Avondsnack", desc:"200g magere kwark · 30g walnoten", kcal:330, p:20 }
+    ]
+  },
+  { day:"Dinsdag", tag:"Zwemmen Techniek + Kracht A", kcal:3810,
+    meals:[
+      { t:"07:30", name:"Pre-swim", desc:"2 rijstwafels · jam", kcal:190, p:3 },
+      { t:"09:30", name:"Egg & Oat Bowl", desc:"3 eieren scrambled · 80g havermout · 30g whey · honing · banaan", kcal:730, p:50 },
+      { t:"13:00", name:"Tonijn Poke Bowl", desc:"200g tonijn (vers/blik) · 200g rijst · edamame · komkommer · ½ avocado · sesamolie · sojasaus", kcal:860, p:52 },
+      { t:"16:30", name:"Tussendoor", desc:"400g kwark · 40g gemengde noten · 15g honing", kcal:430, p:28 },
+      { t:"18:00", name:"Pre-kracht", desc:"3 rijstwafels · 3 el pindakaas", kcal:390, p:12 },
+      { t:"20:30", name:"Post-kracht Shake", desc:"40g whey · 60g haver · banaan · 250ml volle melk", kcal:590, p:40 },
+      { t:"21:30", name:"Diner", desc:"250g mager rundergehakt · 200g pasta · tomatensaus · parmezaan", kcal:780, p:46 }
+    ]
+  },
+  { day:"Woensdag", tag:"Run Intervallen + Kickboksen", kcal:3730,
+    meals:[
+      { t:"07:00", name:"Pre-interval", desc:"Banaan · 2 rijstwafels · 1 el honing", kcal:230, p:3 },
+      { t:"08:30", name:"Ochtend Bowl", desc:"100g havermout · 30g whey · appel · kaneel · 1 el pindakaas", kcal:700, p:37 },
+      { t:"12:30", name:"Kalkoen Couscous Bowl", desc:"200g kalkoen · 150g couscous · paprika · komkommer · 2 el hummus · olijfolie", kcal:830, p:48 },
+      { t:"16:00", name:"Tussendoor", desc:"400g kwark · 30g granola", kcal:340, p:26 },
+      { t:"18:00", name:"Pre-kickboks", desc:"40g whey · banaan · rijstwafel", kcal:300, p:33 },
+      { t:"21:00", name:"Diner Kip Wok Bowl", desc:"200g kipfilet · 250g rijst · paprika · ui · knoflook · sojasaus · sesamolie", kcal:830, p:52 },
+      { t:"22:30", name:"Avond", desc:"200g kwark · 30g noten", kcal:330, p:20 }
+    ]
+  },
+  { day:"Donderdag", tag:"Zwemmen Herstel + Kracht B", kcal:3800,
+    meals:[
+      { t:"07:00", name:"Pre-swim", desc:"Banaan · 2 rijstwafels", kcal:200, p:3 },
+      { t:"09:00", name:"Egg & Grain Bowl", desc:"3 roereieren · 100g haver · ½ avocado · 1 el olijfolie", kcal:760, p:40 },
+      { t:"13:00", name:"Makreel Rijst Bowl", desc:"200g makreel (blik) · 200g rijst · edamame · spinazie · sojasaus · sesamolie", kcal:820, p:52 },
+      { t:"16:00", name:"Tussendoor", desc:"500g kwark · 20g honing · 30g noten", kcal:420, p:32 },
+      { t:"18:00", name:"Pre-kracht", desc:"3 rijstwafels · 2 el pindakaas · banaan", kcal:400, p:12 },
+      { t:"20:30", name:"Post-kracht Shake", desc:"40g whey · 60g haver · banaan · 250ml volle melk", kcal:590, p:40 },
+      { t:"21:30", name:"Diner Steak Bowl", desc:"250g biefstuk · 250g zoete aardappel · broccoli · 1 el olijfolie", kcal:830, p:55 }
+    ]
+  },
+  { day:"Vrijdag", tag:"Zwemmen Conditie + Grappling", kcal:3770,
+    meals:[
+      { t:"07:30", name:"Pre-swim", desc:"2 rijstwafels · jam · ½ banaan", kcal:190, p:3 },
+      { t:"09:30", name:"Smoothie Power Bowl", desc:"40g whey · bevroren mango · banaan · 60g haver · kokosmelk · granola topping", kcal:730, p:38 },
+      { t:"13:00", name:"Zalm Quinoa Bowl", desc:"180g zalmfilet · 150g quinoa · spinazie · cherry tomaat · 1 el olijfolie · citroen", kcal:820, p:50 },
+      { t:"16:00", name:"Tussendoor", desc:"400g kwark · 2 el pindakaas", kcal:380, p:32 },
+      { t:"18:00", name:"Pre-grappling", desc:"40g whey shake · banaan", kcal:250, p:32 },
+      { t:"21:00", name:"Diner Curry Bowl", desc:"200g kip · 250g rijst · paprika · ui · kokosmelk curry · koriander", kcal:850, p:50 },
+      { t:"22:30", name:"Avond", desc:"200g kwark · 40g noten", kcal:350, p:22 }
+    ]
+  },
+  { day:"Zaterdag", tag:"Run Tempo + Kickboksen + Kracht C", kcal:3900,
+    meals:[
+      { t:"08:00", name:"Pre-run", desc:"Banaan · rijstwafel · 1 el honing", kcal:210, p:3 },
+      { t:"09:30", name:"Groot Ontbijt Bowl", desc:"100g havermout · 3 eieren · 30g whey · banaan · 1 el pindakaas", kcal:820, p:55 },
+      { t:"13:00", name:"Bulk Burrito Bowl", desc:"200g mager rundergehakt · 200g rijst · zwarte bonen · mais · ½ avocado · salsa", kcal:980, p:55 },
+      { t:"16:00", name:"Tussendoor", desc:"500g kwark · 30g granola · 15g honing", kcal:420, p:32 },
+      { t:"18:30", name:"Shake", desc:"40g whey · banaan · 250ml volle melk · 50g haver", kcal:500, p:38 },
+      { t:"21:00", name:"Diner", desc:"250g kipfilet · 300g zoete aardappel · broccoli · 1 el olijfolie", kcal:880, p:58 }
+    ]
+  },
+  { day:"Zondag", tag:"Lange Duurloop · Rustdag", kcal:3610,
+    meals:[
+      { t:"08:30", name:"Pre-loop", desc:"80g havermout · 15g honing · banaan", kcal:390, p:8 },
+      { t:"11:00", name:"Post-loop Herstel Bowl", desc:"3 eieren · 30g whey · 80g havermout · blauwe bessen · 1 el pindakaas", kcal:730, p:52 },
+      { t:"14:00", name:"Lunch Tonijn Bowl", desc:"200g tonijn · 200g rijst · ½ avocado · komkommer · sojasaus", kcal:720, p:52 },
+      { t:"17:00", name:"Tussendoor", desc:"400g kwark · 30g noten · appel", kcal:390, p:28 },
+      { t:"20:00", name:"Diner", desc:"200g zalmfilet · groene groenten · 200g aardappel · 1 el olijfolie", kcal:750, p:46 },
+      { t:"22:00", name:"Avond", desc:"200g kwark · 20g honing · kaneel", kcal:220, p:16 }
+    ]
+  }
+];
+
 const FOCUS = ["Consistentie verslaat intensiteit. Kom gewoon opdagen.", "De dag dat je geen zin hebt is de dag die telt.", "Techniek eerst, gewicht volgt.", "Herstel is training. Slaap je sterker.", "Niemand checkt of je traint. Behalve jij, in februari.", "Pijn is informatie, geen vijand. Luister ernaar.", "Je bouwt geen lichaam, je bouwt een gewoonte.", "Eén procent beter vandaag. Dat is genoeg.", "De opleiding test wie consistent was, niet wie hard startte.", "Eet, train, slaap, herhaal. Saai werkt.", "Vermoeid? Schroef terug, stop niet.", "Het zware deel is komen opdagen. De rest is uitvoering.", "Sterk worden is traag. Blijf op het pad.", "Je toekomstige zelf kijkt mee. Maak hem trots."];
 function focusFor(d) {
   return FOCUS[Math.floor(d.getTime() / DAY) % FOCUS.length];
@@ -1318,20 +1397,28 @@ function MarinerTracker() {
       display: "flex",
       gap: 8
     }
-  }, [0.3, 0.4, 0.5].map(r => /*#__PURE__*/React.createElement("button", {
-    key: r,
-    onClick: () => changeBulk(r),
-    style: {
-      flex: 1,
-      padding: "10px 0",
-      borderRadius: 9,
-      border: `1px solid ${bulkRate === r ? C.accent : C.line}`,
-      background: bulkRate === r ? C.accent : "transparent",
-      color: bulkRate === r ? "#fff" : C.text,
-      fontWeight: 600,
-      fontSize: 14
-    }
-  }, r, " kg/wk")))), /*#__PURE__*/React.createElement(SectionTitle, {
+  }, [0.3, 0.4, 0.5].map(r => {
+    const opMaint = Math.round(latestWeight * 45);
+    const opKcal = Math.max(3600, opMaint + Math.round(r * 7700 / 7));
+    const opRate = ((opKcal - opMaint) * 7 / 7700).toFixed(2);
+    return /*#__PURE__*/React.createElement("button", {
+      key: r,
+      onClick: () => changeBulk(r),
+      style: {
+        flex: 1,
+        padding: "10px 6px",
+        borderRadius: 9,
+        border: `1px solid ${bulkRate === r ? C.accent : C.line}`,
+        background: bulkRate === r ? C.accent : "transparent",
+        color: bulkRate === r ? "#fff" : C.text,
+        fontWeight: 600,
+        fontSize: 13,
+        lineHeight: 1.3
+      }
+    },
+    /*#__PURE__*/React.createElement("div", null, opKcal, " kcal"),
+    /*#__PURE__*/React.createElement("div", { style:{ fontSize:10, opacity:.75 } }, "~", opRate, " kg/wk"));
+  })))), /*#__PURE__*/React.createElement(SectionTitle, {
     C: C
   }, "Lean bulk targets"), /*#__PURE__*/React.createElement("div", {
     className: "card",
@@ -1435,7 +1522,7 @@ function MarinerTracker() {
     style: {
       margin: 0
     }
-  }, "• Doel: minimaal 3600 kcal/dag (Defensie-advies voor jouw trainingsvolume).", /*#__PURE__*/React.createElement("br", null), "• Te zwaar om te eten? Voeg een shake toe (whey + havermout + banaan + pindakaas = ±600 kcal)."))), tab === "recovery" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SectionTitle, {
+  }, "• Doel: minimaal 3600 kcal/dag (Defensie-advies voor jouw trainingsvolume).", /*#__PURE__*/React.createElement("br", null), "• Te zwaar om te eten? Voeg een shake toe (whey + havermout + banaan + pindakaas = ±600 kcal)."))  , /*#__PURE__*/React.createElement(SectionTitle, {C: C}, "Weekdieet — Maaltijdplan"), /*#__PURE__*/React.createElement(MealPlanView, {C: C})), tab === "recovery" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SectionTitle, {
     C: C
   }, "Garmin-data invoeren"), /*#__PURE__*/React.createElement("div", {
     className: "card",
@@ -2029,6 +2116,46 @@ function BodyView({
     C: C
   }, "Nog geen gewicht gelogd. Voeg je eerste meting toe om de grafiek te starten."));
 }
+function MealPlanView({ C }) {
+  const [open, setOpen] = useState(null);
+  return /*#__PURE__*/React.createElement(React.Fragment, null,
+    MEAL_PLAN.map((day, di) =>
+      /*#__PURE__*/React.createElement("div", { key: di, className: "card", style: { marginBottom: 10, overflow: "hidden" } },
+        /*#__PURE__*/React.createElement("button", {
+          onClick: () => setOpen(open === di ? null : di),
+          style: { width: "100%", background: "none", border: "none", color: C.text, padding: "12px 14px", textAlign: "left", display: "flex", justifyContent: "space-between", alignItems: "center" }
+        },
+          /*#__PURE__*/React.createElement("div", null,
+            /*#__PURE__*/React.createElement("div", { style: { fontWeight: 700, fontSize: 14 } }, day.day),
+            /*#__PURE__*/React.createElement("div", { style: { fontSize: 11, color: C.dim, marginTop: 2 } }, day.tag)
+          ),
+          /*#__PURE__*/React.createElement("div", { style: { textAlign: "right" } },
+            /*#__PURE__*/React.createElement("div", { style: { fontSize: 13, fontWeight: 700, color: C.accent } }, "~", day.kcal, " kcal"),
+            /*#__PURE__*/React.createElement("div", { style: { fontSize: 11, color: C.dim } }, open === di ? "▲ sluiten" : "▼ maaltijden")
+          )
+        ),
+        open === di && /*#__PURE__*/React.createElement("div", { style: { borderTop: `1px solid ${C.line}`, padding: "0 14px 12px" } },
+          day.meals.map((m, mi) =>
+            /*#__PURE__*/React.createElement("div", { key: mi, style: { padding: "8px 0", borderBottom: mi < day.meals.length - 1 ? `1px solid ${C.panel2}` : "none" } },
+              /*#__PURE__*/React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 } },
+                /*#__PURE__*/React.createElement("div", null,
+                  /*#__PURE__*/React.createElement("span", { style: { fontSize: 11, color: C.dim, marginRight: 6 } }, m.t),
+                  /*#__PURE__*/React.createElement("span", { style: { fontWeight: 600, fontSize: 13 } }, m.name)
+                ),
+                /*#__PURE__*/React.createElement("div", { style: { textAlign: "right", flexShrink: 0 } },
+                  /*#__PURE__*/React.createElement("span", { style: { fontSize: 12, color: C.accent, fontWeight: 700 } }, m.kcal, " kcal"),
+                  /*#__PURE__*/React.createElement("span", { style: { fontSize: 11, color: C.dim } }, " · ", m.p, "g eiwit")
+                )
+              ),
+              /*#__PURE__*/React.createElement("div", { style: { fontSize: 12, color: C.dim, marginTop: 3 } }, m.desc)
+            )
+          )
+        )
+      )
+    )
+  );
+}
+
     try {
       ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(MarinerTracker));
     } catch (e) {
