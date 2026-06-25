@@ -151,11 +151,16 @@ const FIXED = {
   4: [
   // donderdag
   {
+    t: "07:30",
+    label: "Zwemmen — Herstel & Conditie",
+    type: "swim",
+    dur: 45,
+    note: " · rustig tempo, aerobe basis + herstel van woensdag"
+  }, {
     t: "18:30",
     label: "Kracht B — Onderlijf & Posterior chain",
     type: "lift",
-    dur: 70,
-    note: " · ochtend bewust cardio-vrij = herstel"
+    dur: 70
   }],
   5: [
   // vrijdag
@@ -173,6 +178,12 @@ const FIXED = {
   6: [
   // zaterdag
   {
+    t: "08:30",
+    label: "Hardlopen — Tempoloop",
+    type: "cardio",
+    dur: 40,
+    note: " · comfortabel snel, klaar voor kickboksen"
+  }, {
     t: "10:00",
     label: "Kickboksen",
     type: "fight",
@@ -213,9 +224,9 @@ const SPLIT = {
 // ---- Voeding / bulk targets ----
 function nutritionTargets(weight, rate) {
   // rate in kg/week bepaalt surplus. ~7700 kcal per kg, ~60% via voeding effectief
-  const maintenance = Math.round(weight * 33); // actief persoon, 8 sessies/wk
+  const maintenance = Math.round(weight * 45); // hoog actief: 10+ sessies/wk
   const surplus = Math.round((rate || 0.4) * 7700 / 7); // dagelijks surplus
-  const calories = maintenance + surplus;
+  const calories = Math.max(3600, maintenance + surplus); // minimum 3600 kcal (Defensie-advies)
   const protein = Math.round(weight * 2.0); // g
   const fat = Math.round(calories * 0.25 / 9);
   const carbs = Math.round((calories - protein * 4 - fat * 9) / 4);
@@ -1369,7 +1380,7 @@ function MarinerTracker() {
       marginTop: 12,
       lineHeight: 1.5
     }
-  }, "Onderhoud ≈ ", targets.maintenance, " kcal. Surplus ≈ +", targets.surplus, " kcal/dag. Update je gewicht en deze waarden schalen mee.")), /*#__PURE__*/React.createElement(SectionTitle, {
+  }, "Onderhoud ≈ ", targets.maintenance, " kcal · Surplus ≈ +", targets.surplus, " kcal/dag. Minimum 3600 kcal (Defensie-advies). Update je gewicht en deze waarden schalen mee.")), /*#__PURE__*/React.createElement(SectionTitle, {
     C: C
   }, "Vandaag loggen"), /*#__PURE__*/React.createElement("div", {
     className: "card",
@@ -1424,7 +1435,7 @@ function MarinerTracker() {
     style: {
       margin: 0
     }
-  }, "• Te zwaar om te eten? Voeg een shake toe (whey + havermout + banaan + pindakaas)."))), tab === "recovery" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SectionTitle, {
+  }, "• Doel: minimaal 3600 kcal/dag (Defensie-advies voor jouw trainingsvolume).", /*#__PURE__*/React.createElement("br", null), "• Te zwaar om te eten? Voeg een shake toe (whey + havermout + banaan + pindakaas = ±600 kcal)."))), tab === "recovery" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SectionTitle, {
     C: C
   }, "Garmin-data invoeren"), /*#__PURE__*/React.createElement("div", {
     className: "card",
